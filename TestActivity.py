@@ -1,0 +1,57 @@
+from selenium import webdriver
+import time
+import unittest
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException  
+from selenium.webdriver.common.action_chains import ActionChains
+
+from loginPage import LoginPage  
+from staticsPage import StaticPage
+from studentPage import StudentsPage
+from bookshelfPage import BookshielfPage
+
+
+class ActivityTest(unittest.TestCase):
+    
+    def setUp(self): 
+        self.driver=webdriver.Chrome(executable_path=r'C:\seleniumWebdrivers\chromedriver.exe')
+              
+    def test_activity(self):   
+        driver=self.driver    
+        driver.get('https://lesemester.no/logg-inn/')        
+        driver.maximize_window()  
+        time.sleep(3)        
+        login=LoginPage(driver)   
+        login.enter_username("baerum-teacher19")
+        login.enter_password("TestLesemester2020")
+        time.sleep(2)
+        login.click_login_page_login()
+        time.sleep(7)
+        driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[6]/div[1]").click()
+        time.sleep(2)
+        time.sleep(2)
+        driver.execute_script("window.scrollTo(0, 2000)") 
+        time.sleep(3)
+        driver.execute_script("window.scrollTo(2000, 0)") 
+        time.sleep(3)
+        driver.find_element_by_class_name("selectValueComponent").click()
+        options=driver.find_elements_by_class_name("selectOptionText")
+        options[-1].click()
+        time.sleep(3)
+    
+    def tearDown(self):
+        self.driver.close()
+        self.driver.quit()
+        print(f"test completed")
+        
+        
+#unittest.main() 
+if  __name__=='__main_':
+       unittest.main()
+
+   
+    
+  
+   
+ 
+       
